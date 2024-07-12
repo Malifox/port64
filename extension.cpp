@@ -30,6 +30,8 @@
  */
 
 #include "extension.h"
+#include <sourcehook.h>
+#include <sh_memory.h>
 
 /**
  * @file extension.cpp
@@ -164,15 +166,19 @@ static cell_t Port64_StoreToAddress(IPluginContext* pContext, const cell_t* para
     switch(params[3])
     {
         case NumberType_Int8:
+            SourceHook::SetMemAccess(addr, sizeof(int8_t), SH_MEM_READ | SH_MEM_WRITE | SH_MEM_EXEC);
             *(int8_t*)addr = *(int8_t*)input;
             break;
         case NumberType_Int16:
+            SourceHook::SetMemAccess(addr, sizeof(int16_t), SH_MEM_READ | SH_MEM_WRITE | SH_MEM_EXEC);
             *(int16_t*)addr = *(int16_t*)input;
             break;
         case NumberType_Int32:
+            SourceHook::SetMemAccess(addr, sizeof(int32_t), SH_MEM_READ | SH_MEM_WRITE | SH_MEM_EXEC);
             *(int32_t*)addr = *(int32_t*)input;
             break;
         case NumberType_Int64:
+            SourceHook::SetMemAccess(addr, sizeof(int64_t), SH_MEM_READ | SH_MEM_WRITE | SH_MEM_EXEC);
             *(int64_t*)addr = *(int64_t*)input;
             break;
         default:
@@ -200,7 +206,7 @@ static cell_t Port64_GetEntityAddress(IPluginContext* pContext, const cell_t* pa
         return 0;
     }
 
-    *addr = (uintptr_t)pEntity;
+    *addr = (uintptr_t)pEntity + params[3];
     return 0;
 }
 

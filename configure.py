@@ -7,6 +7,8 @@ from ambuild2 import run
 parser = run.BuildParser(sourcePath=sys.path[0], api='2.2')
 parser.options.add_argument('--sm-path', type=str, dest='sm_path', default=None,
                        help='Path to SourceMod')
+parser.options.add_argument('--mms-path', type=str, dest='mms_path', default=None,
+                       help='Path to Metamod:Source')
 
 parser.options.add_argument('--enable-debug', action='store_const', const='1', dest='debug',
                        help='Enable debugging symbols')
